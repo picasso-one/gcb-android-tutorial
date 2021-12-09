@@ -37,7 +37,16 @@ jobs:
       # And finally run the release build
       - run:
           name: Assemble release build
-          command: |
+          command:
+            ./gradlew assembleRelease
+  build:
+    executor:
+        name: android/android-machine
+    steps:
+      - checkout
+      - run:
+          name: Assemble debug build
+          command:
             ./gradlew assembleRelease
 
 # Invoke jobs via workflows
@@ -46,4 +55,5 @@ workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
-      - build-and-test
+      - build
+      
